@@ -1,0 +1,9 @@
+<p class="card-text">
+    <!-- select -->
+    {% if user in article.comment_select_users.all %}
+        <i class="fas fa-heart fa-lg select-button" data-id="{{ article.id }}" data-comment="{{ comment.id }}" style="color: crimson;"></i>
+    {% else %}
+        <i class="far fa-heart fa-lg select-button" data-id="{{ article.id }}" data-comment="{{ comment.id }}" style="color: black;"></i>
+    {% endif %}
+    
+  </p>

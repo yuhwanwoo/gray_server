@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<div>
+  <h2>자소서 첨삭 게시판</h2>
+</div>
+
+
+<h1>당신이 입력한 검색어는 {{b.title}}</h1>
+
+<form class="form-inline my-2 my-md-0" method="get" action="{% url 'community:search' %}">
+  <input class="form-control" type="text" placeholder="Search" aria-label="Search" name="b" value="{{b}}">
+</form>
+<span>
+<div>
+  <table>
+    <colgroup>
+      <col width="28">
+      <col width="28">
+      <col width="427">
+      <col width="122">
+      <col width="100">
+      <col width="55">
+      <col width="55">
+    </colgroup>
+    <thead>
+      <tr>
+        <th colspan="2"></th>
+        <th scope="col">
+          <span>제목</span>
+        </th>
+        <th scope="col">작성자</th>
+        <th scope="col">작성일</th>
+        <th scope="col">조회</th>
+        <th scope="col">좋아요</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for article in border_search %}
+      <tr align="center">
+        <td colspan="2">{{ article.pk }}</td>
+        <td align="left"><a href="{% url 'community:detail' article.pk %}">{{ article.title }}</a></td>
+        <td align="left"><a href="{% url 'accounts:profile' article.user %}">{{ article.user }}</a></td>
+        <td>{{ article.date }}</td>
+        <td>{{ article.hits }}</td>
+        <td>{{ article.like_users.all|length }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    
+  </table>
+  <div>
+  <div style="width: 30%; text-align: right;">
+  <a href="{% url 'community:create' %}">[CREATE]</a>
+  </div>
+  <div style="width: 30%;">
+  {% for num in articles.paginator.page_range %}
+<a href="{% url 'community:index' %}?page={{ num }}">{{ num }}</a>
+{% endfor %}
+  </div>
+</div>
+</div>
+</span>
+
+
+<script src="{% static 'community/js/like.js' %}"></script>
+{% endblock %}
